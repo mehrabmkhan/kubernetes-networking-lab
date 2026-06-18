@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-lab
+  namespace: k8s-network-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: network-lab
+  template:
+    metadata:
+      labels:
+        app: network-lab
+    spec:
+      containers:
+        - name: echo
+          image: hashicorp/http-echo:1.0.0
+          args:
+            - -listen=:5678
+            - -text=Kubernetes networking lab
+          ports:
+            - containerPort: 5678

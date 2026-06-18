@@ -1,0 +1,6 @@
+flowchart LR
+    U[User] --> I[Ingress NGINX]
+    I --> S[ClusterIP Service]
+    S --> D[Deployment]
+    D --> P[NetworkPolicy]
+    D --> T[Traffic control pod]

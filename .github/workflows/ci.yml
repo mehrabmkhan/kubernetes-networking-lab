@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    paths:
+      - "manifests/**"
+      - "scripts/**"
+      - "tests/**"
+      - "requirements-dev.txt"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    paths:
+      - "manifests/**"
+      - "scripts/**"
+      - "tests/**"
+      - "requirements-dev.txt"
+      - ".github/workflows/ci.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Validate manifests
+        run: python scripts/validate_manifests.py
+
+      - name: Run tests
+        run: pytest
